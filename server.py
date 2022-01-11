@@ -3,6 +3,7 @@ import time
 import math
 
 from flask import Flask
+from flask import request
 from flask import make_response
 
 def n_factorial(count):
@@ -18,11 +19,13 @@ def create_app():
     def home():
         return make_response('Hello', HTTPStatus.OK)
 
-    @app.route('/factorial', methods=["GET"])
+    @app.route('/factorial', methods=["POST"])
     def factorial():
 
+        count = int(request.values['count'])
+
         start = time.time()
-        n_factorial(count=2000)
+        n_factorial(count)
         end = time.time()
 
         return make_response(f'{end-start:.3f}', HTTPStatus.OK)
